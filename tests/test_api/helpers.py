@@ -31,4 +31,12 @@ def create_new_courier():
 
     return courier_data
 
+def delete_courier(login, password):
+    login_payload = {"login": login, "password": password}
+    login_response = requests.post(f"{BASE_URL}/courier/login", data=login_payload)
+    
+    courier_id = login_response.json().get("id")
+    if not courier_id:
+        return
 
+    requests.delete(f"{BASE_URL}/courier/{courier_id}")

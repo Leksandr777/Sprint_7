@@ -22,8 +22,11 @@ class TestLoginCourier:
         with allure.step("Проверка статус кода"):        
             assert response.status_code == 200, (f"Неверный статус код, получен {response.status_code}")
         with allure.step("Проверка что id есть в ответе"):
-          assert  "id" in  response.text, (f"Неверное тело ответа, получено: {response.json()}")
-
+            assert  "id" in  response.text, (f"Неверное тело ответа, получено: {response.json()}")
+        with allure.step("Удаление созданного курьера"):
+            helpers.delete_courier(new_courier[0], new_courier[1])
+          
+        
     @allure.feature("Логин курьера")
     @allure.story("ЛОгин курьера с пропущенными обязательными полями")
     @pytest.mark.parametrize("missing_field", ["login", "password"])

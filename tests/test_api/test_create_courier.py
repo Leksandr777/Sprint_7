@@ -45,6 +45,8 @@ class TestCreateCourier:
             assert response.status_code == 409, (f"Не получен статус конфликта, статус {response.status_code}")
         with allure.step("Проверка сообщения об ошибке"):                 
             assert response_data["message"] == "Этот логин уже используется. Попробуйте другой.", (f"Нет сообщения о конфликте, получено: {response.json()}")
+        with allure.step("Удаление созданного курьера"):
+            helpers.delete_courier(new_courier[0], new_courier[1])
 
     @allure.feature("Создание курьера")
     @allure.story("Проверка создания с пропущенными полями") 
