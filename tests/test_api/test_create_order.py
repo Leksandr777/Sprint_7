@@ -3,6 +3,7 @@ import requests
 import allure
 
 class TestCreateOrder:
+    BASE_URL = "https://qa-scooter.praktikum-services.ru/api/v1/orders"
 
     @allure.title("Тестирование api создания заказа")
     @allure.feature("Создание заказа")
@@ -13,7 +14,7 @@ class TestCreateOrder:
         {"colors": ["BLACK", "GREY"]},
         {"colors": []} 
     ])
-    def test_create_order_with_different_colours(self, base_url, colour_option):
+    def test_create_order_with_different_colours(self, colour_option):
 
         payload = {
                 "firstName": "Naruto",
@@ -29,7 +30,7 @@ class TestCreateOrder:
         if colour_option["colors"]:
             payload["colors"] = colour_option["colors"]
         with allure.step("Отправка POST‑запроса для создания заказа"):
-           response = requests.post(f"{base_url}/orders", data=payload)
+           response = requests.post(self.BASE_URL, data=payload)
 
         with allure.step("Проверка статус кода"):
            assert response.status_code == 201, (f"Неверный код статуса создания заказа ")
